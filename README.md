@@ -9,5 +9,5 @@ After cloning the repo, do this:
 ```sh
 $ npm install
 $ ./script/dev
-# open http://localhost:5000
+# open http://localhost:9000
 ```
