@@ -1,7 +1,7 @@
 var path = require('path');
 
 module.exports = {
-  entry: "./app/client",
+  entry: "./app/client.jsx",
 
   output: {
     filename: '[name].js',
