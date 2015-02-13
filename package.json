@@ -7,6 +7,7 @@
     "start": "script/run"
   },
   "dependencies": {
+    "debug": "^2.1.1",
     "node-jsx": "^0.12.4",
     "path": "^0.11.14",
     "react": "^0.12.2",
