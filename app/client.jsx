@@ -1,2 +1,1 @@
-var debug = require('debug')('client');
-debug('Started')
+var App = require('jsx!./components/App.jsx')

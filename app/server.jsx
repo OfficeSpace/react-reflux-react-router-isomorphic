@@ -26,9 +26,11 @@ app.use(function(req, res, next) {
       <html>
         <body>
           <App/>
+          <script type="text/javascript" src="/js/main.js"></script>
         </body>
       </html>, function(err, markup) {
         if(err) {
+          debug(err)
           return next()
         }
         return res.end('<!DOCTYPE html>' + markup)
@@ -36,6 +38,7 @@ app.use(function(req, res, next) {
     )
   }
   catch(err) {
+    debug(err)
     return next()
   }
 
