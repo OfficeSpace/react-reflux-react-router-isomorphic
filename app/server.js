@@ -39,7 +39,7 @@ app.use(function(req, res, next) {
             return next()
           }
 
-          return res.end('<!DOCTYPE html><html><body><div id="container">¡markup!</div><script type="text/javascript" src="/js/main.js"></script></body></html>'.replace("¡markup!", markup))
+          return res.end('<!DOCTYPE html><html><body>¡markup!<script type="text/javascript" src="/js/main.js"></script></body></html>'.replace("¡markup!", markup))
         }    
       )
     })
