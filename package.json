@@ -14,7 +14,7 @@
     "fibers": "^1.0.5",
     "jsx-loader": "^0.12.2",
     "morgan": "^1.5.1",
-    "node-jsx": "^0.12.4",
+    "node-jsx": "git://github.com/OfficeSpace/node-jsx",
     "path": "^0.11.14",
     "react": "^0.12.2",
     "react-async": "^2.0.1",
