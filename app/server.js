@@ -2,9 +2,11 @@
 
 var http = require('http');
 var express = require('express')
+var session = require('express-session')
 
 var React = require('react');
 var reactAsync = require('react-async')
+var IsoStore = require('./IsoStore')
 var Router = require('react-router')
 var routes = require('./routes')
 var App = require('./components/App')
@@ -24,21 +26,24 @@ app.use(favicon(path.join(__dirname, '../public/favicon.ico')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
+app.use(session({secret: 'reactrocks', cookie: {}}))
 
 api.routes(app)
 
 app.use(function(req, res, next) {
+  req.session.token = "world"
   res.writeHead(200, {'Content-Type': 'text/html'});
   try {
     Router.run(routes, req.url, function (Handler, state) {
       reactAsync.renderToStringAsync(
-        <Handler />,
+        <Handler session={req.session} />,
         function(err, markup) {
           if(err) {
             debug(err)
             return next()
           }
 
+          markup = IsoStore.injectStateIntoMarkup(markup)
           return res.end('<!DOCTYPE html><html><body>¡markup!<script type="text/javascript" src="/js/main.js"></script></body></html>'.replace("¡markup!", markup))
         }    
       )
