@@ -12,7 +12,7 @@ var api = {
           "id":req.params.id,
           "name": "Building #" + req.params.id
         })
-      }, 2000)
+      }, 0)
     })
   }
 }

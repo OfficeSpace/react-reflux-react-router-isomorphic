@@ -7,19 +7,14 @@ var Router = require('react-router')
 var debug = require('./Debug')
 var Link = require('react-router').Link
 
-var appActions = require('../actions')
 var Home = require('./Home')
 
 var Building = React.createClass({
   displayName: "Building",
   mixins: [Router.State, reactAsync.Mixin, Reflux.ListenerMixin],
 
-  componentWillMount: function() {
-    this.props.session.buildingStore = require('../stores/buildingStore')(this.props.session).store
-  },
-
   componentDidMount: function() {
-    this.listenTo(this.props.session.buildingStore, this.updateData)
+    this.listenTo(this.props.req.stores.buildingStore.store, this.updateData)
   },
 
   updateData: function(data) {
@@ -29,13 +24,13 @@ var Building = React.createClass({
   },
 
   getInitialStateAsync: function(cb) {
-    var unsubscribe = this.props.session.buildingStore.listen(function(data) {
+    var unsubscribe = this.props.req.stores.buildingStore.store.listen(function(data) {
       unsubscribe()
       return cb(null, {
         building: data
       })
     })
-    appActions.loadBuilding(this.id())
+    this.props.req.actions.loadBuilding(this.id())
   },
 
   render: function() {
@@ -47,7 +42,7 @@ var Building = React.createClass({
 
     return (
       <div>
-        <h2>{name} -- {this.props.session.token} </h2>
+        <h2>{name}</h2>
         <Link to="/">back</Link>
       </div>
     );

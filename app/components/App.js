@@ -14,7 +14,7 @@ var App = module.exports = React.createClass({
     return (
       <div>
         <h1>App</h1>
-        <RouteHandler session={this.props.session}/>
+        <RouteHandler req={this.props.req}/>
       </div>
     );
   }

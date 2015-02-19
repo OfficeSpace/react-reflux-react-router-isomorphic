@@ -3,15 +3,14 @@
 var request = require('superagent')
 
 var IsoStore = require('../IsoStore')
-var appActions = require('../actions')
 var appConfig = require('../config')
 
-function createBuildingStore(session) {
-  return IsoStore.create('buildingStore', session, {
+function createBuildingStore(req) {
+  return IsoStore.create('buildingStore', req, {
 
     init: function() {
       this.buildingData = {}
-      this.listenTo(appActions.loadBuilding, this.loadBuildingData)
+      this.listenTo(req.actions.loadBuilding, this.loadBuildingData)
     },
 
     loadBuildingData: function() {

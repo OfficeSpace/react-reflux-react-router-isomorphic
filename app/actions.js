@@ -2,8 +2,10 @@
 
 var Reflux = require('reflux')
 
-var appActions = Reflux.createActions([
-  'loadBuilding'
-])
+function actions() {
+  return Reflux.createActions([
+    'loadBuilding'
+  ])
+}
 
-module.exports = appActions
+module.exports = actions

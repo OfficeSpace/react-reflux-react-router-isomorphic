@@ -2,11 +2,12 @@
 
 var Reflux = require('reflux')
 var asciiJSON = require('ascii-json')
+var debug = require('debug')('isostore')
 
 var stores = {}
 
 class IsoStore {
-  constructor(name, config) {
+  constructor(name, req, config) {
     this.name = name
     this.store = Reflux.createStore(config)
     this.loadSerializedData()
@@ -22,19 +23,14 @@ class IsoStore {
   }
 }
 
-function create(name, session, config) {
-  var store = new IsoStore(name, config)
-  if(typeof stores[session.sid] === 'undefined') {
-    stores[session.sid] = {}
-  }
-  stores[session.sid][name] = store
-  return store
+function create(name, req, config) {
+  return new IsoStore(name, req, config)
 }
 
-function injectStateIntoMarkup(session, markup) {
+function injectStateIntoMarkup(req, markup) {
   var data = {}
-  for (var name in stores[session.sid]) {
-    data[name] = stores[session.sid][name].store.asJson()
+  for (var name in req.stores) {
+    data[name] = req.stores[name].store.asJson()
   }
 
   var escapedJson = asciiJSON.stringify(data).replace(/<\//g, '<\\/');

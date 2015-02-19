@@ -16,6 +16,7 @@ var favicon = require('serve-favicon')
 var logger = require('morgan')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
+var refluxRequestContext = require('./refluxRequestContext')
 var app = express()
 
 var api = require ('../api/api')
@@ -26,24 +27,24 @@ app.use(favicon(path.join(__dirname, '../public/favicon.ico')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
-app.use(session({secret: 'reactrocks', cookie: {}}))
+// app.use(session({secret: 'reactrocks', cookie: {}}))
+app.use(refluxRequestContext)
 
 api.routes(app)
 
 app.use(function(req, res, next) {
-  req.session.token = "world"
   res.writeHead(200, {'Content-Type': 'text/html'});
   try {
     Router.run(routes, req.url, function (Handler, state) {
       reactAsync.renderToStringAsync(
-        <Handler session={req.session} />,
+        <Handler req={req} />,
         function(err, markup) {
           if(err) {
             debug(err)
             return next()
           }
 
-          markup = IsoStore.injectStateIntoMarkup(markup)
+          markup = IsoStore.injectStateIntoMarkup(req, markup)
           return res.end('<!DOCTYPE html><html><body>¡markup!<script type="text/javascript" src="/js/main.js"></script></body></html>'.replace("¡markup!", markup))
         }    
       )
@@ -57,13 +58,13 @@ app.use(function(req, res, next) {
 })
 
 // handle errors
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.send('error', {
-    message: err.message,
-    error: {}
-  })
-})
+// app.use(function(err, req, res, next) {
+//   res.status(err.status || 500);
+//   res.send('error', {
+//     message: err.message,
+//     error: err
+//   })
+// })
 
 app.set('port', process.env.PORT || 9999);
 
