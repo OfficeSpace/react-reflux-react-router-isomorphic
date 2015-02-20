@@ -8,13 +8,14 @@ var NotFoundRoute = Router.NotFoundRoute
 
 /* Components */
 var App  = require('./components/App')
-var Home  = require('./components/Home')
+var Buildings  = require('./components/Buildings')
 var Building  = require('./components/Building')
 
 var routes = (
-  <Route name="home" path="/" handler={App}>
-    <DefaultRoute handler={Home}/>
+  <Route name="app" path="/" handler={App}>
+    <DefaultRoute handler={Buildings}/>
     <Route name="building" path="/building/:id" handler={Building}/>
+    <Route name="buildings" path="/buildings" handler={Buildings}/>
   </Route>
 )
 

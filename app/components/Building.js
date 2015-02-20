@@ -7,8 +7,6 @@ var Router = require('react-router')
 var debug = require('./Debug')
 var Link = require('react-router').Link
 
-var Home = require('./Home')
-
 var Building = React.createClass({
   displayName: "Building",
   mixins: [Router.State, reactAsync.Mixin, Reflux.ListenerMixin],

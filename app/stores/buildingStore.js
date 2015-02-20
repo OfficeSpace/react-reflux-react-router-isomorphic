@@ -1,7 +1,6 @@
 'use strict'
 
 var request = require('superagent')
-
 var IsoStore = require('../IsoStore')
 var appConfig = require('../config')
 

@@ -4,7 +4,8 @@ var Reflux = require('reflux')
 
 function actions() {
   return Reflux.createActions([
-    'loadBuilding'
+    'loadBuilding',
+    'searchBuildings'
   ])
 }
 
